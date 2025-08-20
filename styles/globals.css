@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+--bg: #050507;
+--red: #ff1744;
+--red-soft: #ff5771;
+}
+
+
+html, body, #__next { height: 100%; }
+body { background: var(--bg); color: white; }
+
+
+/* ====== Cinematic Layers ====== */
+/* Scanlines */
+.layer-scanlines { pointer-events:none; position:fixed; inset:0; background: repeating-linear-gradient(to bottom, rgba(255,23,68,0.08), rgba(255,23,68,0.08) 1px, transparent 1px, transparent 3px); mix-blend-mode: screen; opacity:.18; }
+/* Noise */
+.layer-noise { pointer-events:none; position:fixed; inset:0; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2" stitchTiles="stitch"/></filter><rect width="120" height="120" filter="url(%23n)" opacity=".06"/></svg>'); opacity:.2; }
+/* Vignette */
+.layer-vignette { pointer-events:none; position:fixed; inset:0; box-shadow: inset 0 0 120px 40px #000; }
+/* Grid */
+.layer-grid { position:fixed; inset:0; background-image: linear-gradient(rgba(255,23,68,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,23,68,.12) 1px, transparent 1px); background-size: 40px 40px; opacity:.18; }
+/* Animated gradient haze */
+.layer-haze { position:fixed; inset:-20%; background: radial-gradient(60% 40% at 30% 20%, rgba(255,23,68,.09), transparent 60%), radial-gradient(40% 40% at 80% 70%, rgba(255,23,68,.10), transparent 60%), radial-gradient(30% 30% at 10% 90%, rgba(255,23,68,.08), transparent 60%); filter: blur(18px); animation: haze 18s ease-in-out infinite alternate; }
+@keyframes haze { 0%{transform: translate3d(0,0,0) scale(1);} 100%{transform: translate3d(2%, -2%, 0) scale(1.05);} }
+/* Fog (soft moving bands) */
+.layer-fog { position:fixed; inset:-10%; background: radial-gradient(80% 25% at 50% 110%, rgba(255,23,68,.08), transparent 60%), radial-gradient(70% 20% at 50% -10%, rgba(255,23,68,.05), transparent 60%); filter: blur(24px); animation:fog 22s ease-in-out infinite; }
+@keyframes fog { 0%{transform: translateX(-2%) } 50%{ transform: translateX(2%) } 100%{ transform: translateX(-2%) } }
+
+
+/* Glitch Text helpers */
+.glitch { position: relative; text-transform: uppercase; }
+.glitch::before, .glitch::after { content: attr(data-text); position:absolute; left:0; top:0; width:100%; height:100%; }
+.glitch::before { transform: translate(2px, -2px); clip-path: inset(0 0 45% 0); color: var(--red); opacity:.8; filter: drop-shadow(0 0 12px var(--red)); }
+.glitch::after { transform: translate(-2px, 2px); clip-path: inset(55% 0 0 0); color: var(--red-soft); opacity:.6; filter: drop-shadow(0 0 8px var(--red-soft)); }
+
+
+/* CRT subtle curve */
+.crt { position: relative; }
+.crt::after { content:""; position:absolute; inset:-2px; pointer-events:none; background: radial-gradient(120% 60% at 50% -10%, rgba(255,255,255,.06), transparent 40%); border-radius: 16px; }
+
+
+/* Cursor Trail (elements appended inline) */
+.trail-dot { position: fixed; width: 8px; height: 8px; border-radius: 9999px; box-shadow: 0 0 10px var(--red), 0 0 24px rgba(255,23,68,.5); background: var(--red); pointer-events:none; will-change: transform; mix-blend-mode: screen; }
+
+
+/* Neon button base */
+.btn-neon { position:relative; display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.9rem 1.4rem; border:1.5px solid var(--red); border-radius:14px; text-transform:uppercase; letter-spacing:.14em; font-weight:700; box-shadow: var(--shadow, 0 0 0 transparent); transition: transform .15s ease, box-shadow .2s ease, background .2s ease; }
+.btn-neon:hover { box-shadow: 0 0 10px rgba(255,23,68,.9), 0 0 28px rgba(255,23,68,.45); }
+.btn-neon .shine { position:absolute; inset:0; background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.08) 45%, transparent 60%); transform: translateX(-120%); }
+.btn-neon:hover .shine { transition: transform .6s ease; transform: translateX(120%); }
+.btn-neon:active { transform: translateY(1px) scale(.995); }
+
+
+/* Magnetic hover */
+.magnetic { transform: translate3d(var(--tx,0), var(--ty,0), 0); }
+
+
+/* Breach overlay */
+.breach { position:fixed; inset:0; display:grid; place-items:center; background: rgba(0,0,0,.88); z-index:9999; animation: flicker 2.2s infinite; }
+.breach h2 { font-family: var(--font-mono, 'IBM Plex Mono', monospace); font-size: clamp(2rem, 6vw, 5rem); color: var(--red); text-shadow: 0 0 12px var(--red), 0 0 36px rgba(255,23,68,.6); }
