@@ -324,7 +324,7 @@ export default function Home() {
              © 2025 THE MIDNIGHT CLUB • ELITE DEVELOPMENT TEAM
            </p>
            <p className="text-green-500/40 text-xs mt-1">
-             Built with ❤️ for the future of technology
+             Built with ❤️ for the future of technology by Harsh
            </p>
          </motion.div>
        </motion.div>
