@@ -26,6 +26,22 @@ type Student = {
   resume_url?: string;
 };
 
+type AvyuktApplicant = {
+  id: string;
+  name: string;
+  email: string;
+  course: string;
+  current_year: string;
+  phone_no: string;
+  why_join: string;
+  tech_skills: string;
+  project_interest: string;
+  weekly_time: string;
+  project_link: string;
+  applied_for: string;
+  created_at: string;
+};
+
 export default function AdminPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,6 +49,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(false);
 
   const [students, setStudents] = useState<Student[]>([]);
+  const [avyuktApplicants, setAvyuktApplicants] = useState<AvyuktApplicant[]>([]);
   const [newAdminEmail, setNewAdminEmail] = useState("");
   const [newAdminRole, setNewAdminRole] = useState<"admin" | "god">("admin");
 
@@ -63,9 +80,16 @@ export default function AdminPage() {
     if (!error && data) setStudents(data as Student[]);
   };
 
+  // ---------- FETCH AVYUKT APPLICANTS ----------
+  const fetchAvyuktApplicants = async () => {
+    const { data, error } = await supabase.from("avyukt_applications").select("*").order("created_at", { ascending: false });
+    if (!error && data) setAvyuktApplicants(data as AvyuktApplicant[]);
+  };
+
   useEffect(() => {
     if (admin) {
       fetchStudents();
+      fetchAvyuktApplicants();
       // Live updates via Supabase Realtime
       const channel = supabase
         .channel("applications-changes")
@@ -74,6 +98,13 @@ export default function AdminPage() {
           { event: "*", schema: "public", table: "applications" },
           () => {
             fetchStudents();
+          }
+        )
+        .on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: "avyukt_applications" },
+          () => {
+            fetchAvyuktApplicants();
           }
         )
         .subscribe();
@@ -179,7 +210,7 @@ export default function AdminPage() {
       )}
 
       {/* STUDENT APPLICATIONS */}
-      <div>
+      <div className="mb-10">
         <h2 className="text-xl font-bold mb-4">📋 Student Applications</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {students.map((student) => (
@@ -218,6 +249,85 @@ export default function AdminPage() {
                   View Resume
                 </a>
               )}
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* AVYUKT DEVELOPMENT TEAM APPLICATIONS */}
+      <div>
+        <h2 className="text-xl font-bold mb-4">🚀 Avyukt Development Team Applications</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {avyuktApplicants.map((applicant) => (
+            <motion.div
+              key={applicant.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="p-6 bg-black border border-green-500 rounded-lg hover:shadow-lg hover:shadow-green-500/20 transition"
+            >
+              <div className="flex justify-between items-start mb-3">
+                <h3 className="text-lg font-bold text-green-200">{applicant.name}</h3>
+                <span className="px-2 py-1 bg-green-600 text-black text-xs rounded">
+                  {applicant.applied_for}
+                </span>
+              </div>
+              
+              <div className="space-y-2 text-sm">
+                <p>
+                  <span className="font-bold text-green-300">Email:</span>{" "}
+                  <a href={`mailto:${applicant.email}`} className="text-green-400 hover:text-green-200">
+                    {applicant.email}
+                  </a>
+                </p>
+                <p>
+                  <span className="font-bold text-green-300">Course:</span>{" "}
+                  {applicant.course} — {applicant.current_year}
+                </p>
+                <p>
+                  <span className="font-bold text-green-300">Phone:</span>{" "}
+                  <a href={`tel:${applicant.phone_no}`} className="text-green-400 hover:text-green-200">
+                    {applicant.phone_no}
+                  </a>
+                </p>
+                <p>
+                  <span className="font-bold text-green-300">Why Join:</span>{" "}
+                  <span className="text-green-300">{applicant.why_join}</span>
+                </p>
+                {applicant.tech_skills && (
+                  <p>
+                    <span className="font-bold text-green-300">Tech Skills:</span>{" "}
+                    <span className="text-green-300">{applicant.tech_skills}</span>
+                  </p>
+                )}
+                {applicant.project_interest && (
+                  <p>
+                    <span className="font-bold text-green-300">Project Interest:</span>{" "}
+                    <span className="text-green-300">{applicant.project_interest}</span>
+                  </p>
+                )}
+                {applicant.weekly_time && (
+                  <p>
+                    <span className="font-bold text-green-300">Weekly Time:</span>{" "}
+                    <span className="text-green-300">{applicant.weekly_time}</span>
+                  </p>
+                )}
+                {applicant.project_link && (
+                  <p>
+                    <span className="font-bold text-green-300">Project Link:</span>{" "}
+                    <a 
+                      href={applicant.project_link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-green-400 underline hover:text-green-200"
+                    >
+                      View Project
+                    </a>
+                  </p>
+                )}
+                <p className="text-xs text-green-500 mt-3">
+                  Applied: {new Date(applicant.created_at).toLocaleDateString()}
+                </p>
+              </div>
             </motion.div>
           ))}
         </div>
