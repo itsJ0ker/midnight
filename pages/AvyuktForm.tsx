@@ -297,6 +297,36 @@ export default function AvyuktForm() {
         </button>
       </form>
 
+      {/* CONTACT SECTION */}
+      <motion.div 
+        className="mt-8 w-full max-w-2xl text-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+      >
+        <div className="border border-green-500/40 p-6 rounded-lg bg-black/70 shadow-[0_0_20px_#22c55e40]">
+          <h3 className="text-lg font-bold text-green-300 mb-3">
+            💬 Contact for any query and doubt
+          </h3>
+          <p className="text-green-400 mb-4 text-sm">
+            Have questions about the Avyukt Development Team? 
+            Need clarification on the application process?
+          </p>
+          <a
+            href="https://www.instagram.com/iharsh.zip/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 
+                       hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-lg 
+                       transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+          >
+            <span className="text-xl">📱</span>
+            <span>Follow on Instagram</span>
+            <span className="text-sm opacity-80">@iharsh.zip</span>
+          </a>
+        </div>
+      </motion.div>
+
       {/* APPLICANTS LIST */}
       <div className="mt-12 w-full max-w-4xl">
         <h2 className="text-lg md:text-2xl font-bold mb-4 text-green-300">
