@@ -102,11 +102,12 @@ export default function Home() {
          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-green-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-green-500/3 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '2s' }}></div>
        </div>
+      
       {/* ===== Enhanced Top Menu ===== */}
-      <div className="absolute top-4 left-4 right-4 flex justify-between items-center">
+      <div className="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-4 flex justify-between items-center z-10">
         {/* Left side - Home indicator */}
-        <div className="flex items-center gap-2 px-3 py-2 border border-green-500/30 rounded-lg bg-black/50 backdrop-blur-sm">
-          <FaHome className="text-green-400 text-sm" />
+        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-2 border border-green-500/30 rounded-lg bg-black/50 backdrop-blur-sm">
+          <FaHome className="text-green-400 text-xs sm:text-sm" />
           <span className="text-green-400 text-xs font-semibold tracking-wider hidden sm:inline">HOME</span>
         </div>
 
@@ -114,7 +115,7 @@ export default function Home() {
         <div className="flex gap-1 sm:gap-2">
           <a
             href="/ApplicationForm"
-            className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 border border-green-400 rounded-lg 
+            className="flex items-center gap-1 px-2 sm:px-4 py-1 sm:py-2 border border-green-400 rounded-lg 
                        hover:bg-green-500 hover:text-black transition-all duration-300 
                        shadow-[0_0_12px_#00ff00] text-xs sm:text-sm font-semibold tracking-wider
                        hover:shadow-[0_0_20px_#00ff00] hover:scale-105"
@@ -125,7 +126,7 @@ export default function Home() {
           </a>
           <a
             href="/AvyuktForm"
-            className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 border border-green-400 rounded-lg 
+            className="flex items-center gap-1 px-2 sm:px-4 py-1 sm:py-2 border border-green-400 rounded-lg 
                        hover:bg-green-500 hover:text-black transition-all duration-300 
                        shadow-[0_0_12px_#00ff00] text-xs sm:text-sm font-semibold tracking-wider
                        hover:shadow-[0_0_20px_#00ff00] hover:scale-105
@@ -137,7 +138,7 @@ export default function Home() {
           </a>
           <a
             href="/AdminPage"
-            className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 border border-green-400 rounded-lg 
+            className="flex items-center gap-1 px-2 sm:px-4 py-1 sm:py-2 border border-green-400 rounded-lg 
                        hover:bg-green-500 hover:text-black transition-all duration-300 
                        shadow-[0_0_12px_#00ff00] text-xs sm:text-sm font-semibold tracking-wider
                        hover:shadow-[0_0_20px_#00ff00] hover:scale-105"
@@ -149,11 +150,13 @@ export default function Home() {
         </div>
       </div>
 
+
       <motion.h1
         className="font-extrabold text-green-400
                    text-3xl sm:text-5xl md:text-7xl 
                    drop-shadow-[0_0_25px_#00ff00] 
-                   tracking-[0.15em] leading-tight text-center"
+                   tracking-[0.15em] leading-tight text-center
+                   mt-20 sm:mt-24 md:mt-28"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 1 }}
